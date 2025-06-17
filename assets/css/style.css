@@ -1,12 +1,12 @@
-/* === CSS da Matrix (copiado do anterior) === */
+/* === CSS da Matrix (exemplo simplificado) === */
 
 .matrix-container {
-  position: fixed;  /* fixado para ficar no fundo */
+  position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
   background: #000;
-  z-index: 0; /* atrás do conteúdo */
+  z-index: 0;
   overflow: hidden;
   display: flex;
 }
@@ -63,13 +63,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Exemplo de animação para 5 colunas (repita para mais colunas com delay diferente) */
 .matrix-column:nth-child(1) {
   left: 0px;
   animation-delay: -2.5s;
   animation-duration: 3s;
 }
-/* ... (repita para as demais colunas com seus left e animações) */
-/* para simplificar, pode copiar as regras de antes */
+.matrix-column:nth-child(2) {
+  left: 20px;
+  animation-delay: -3s;
+  animation-duration: 3.5s;
+}
+.matrix-column:nth-child(3) {
+  left: 40px;
+  animation-delay: -3.5s;
+  animation-duration: 4s;
+}
+.matrix-column:nth-child(4) {
+  left: 60px;
+  animation-delay: -4s;
+  animation-duration: 4.5s;
+}
+.matrix-column:nth-child(5) {
+  left: 80px;
+  animation-delay: -4.5s;
+  animation-duration: 5s;
+}
 
 @keyframes fall {
   0% {
@@ -82,50 +101,128 @@
   }
 }
 
-/* === Seu CSS ORIGINAL (do formulário) pode ir aqui embaixo === */
+/* === Seu CSS do formulário === */
 
-body {
+.form {
   position: relative;
-  z-index: 1; /* para ficar acima do fundo */
-  font-family: Arial, sans-serif;
-  background: transparent; /* fundo transparente para deixar o efeito visível */
+  z-index: 1; /* acima do fundo */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 0.4em;
+  background-color: #171717;
+  border-radius: 25px;
+  transition: .4s ease-in-out;
+  max-width: 350px;
+  margin: 4em auto; /* centralizar horizontalmente com margem vertical */
+}
+
+.form:hover {
+  transform: scale(1.05);
+  border: 1px solid black;
+}
+
+#heading {
+  text-align: center;
+  margin: 2em 0;
+  color: rgb(255, 255, 255);
+  font-size: 1.2em;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border-radius: 25px;
+  padding: 0.6em;
+  border: none;
+  outline: none;
   color: white;
-  padding: 20px;
+  background-color: #171717;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
 
-h2 {
-  margin-bottom: 20px;
+.input-icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: white;
 }
 
-form {
-  background: rgba(0, 0, 0, 0.7);
-  padding: 15px;
-  border-radius: 8px;
-  max-width: 300px;
-}
-
-input[type="text"],
-input[type="password"] {
+.input-field {
+  background: none;
+  border: none;
+  outline: none;
   width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  border: none;
-  border-radius: 4px;
+  color: #d3d3d3;
 }
 
-button {
-  margin-top: 10px;
-  margin-right: 10px;
-  padding: 8px 12px;
-  border: none;
+.form .btn {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 2.5em;
+}
+
+.button1 {
+  padding: 0.5em 1.1em;
   border-radius: 5px;
-  background-color: #0f0;
-  color: #000;
+  margin-right: 0.5em;
+  border: none;
+  outline: none;
+  transition: .4s ease-in-out;
+  background-color: #252525;
+  color: white;
   cursor: pointer;
-  font-weight: bold;
 }
 
-button:hover {
-  background-color: #0c0;
+.button1:hover {
+  background-color: black;
+  color: white;
 }
 
+.button2 {
+  padding: 0.5em 2.3em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: .4s ease-in-out;
+  background-color: #252525;
+  color: white;
+  cursor: pointer;
+}
+
+.button2:hover {
+  background-color: black;
+  color: white;
+}
+
+.button3 {
+  margin-bottom: 3em;
+  padding: 0.5em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: .4s ease-in-out;
+  background-color: #252525;
+  color: white;
+  cursor: pointer;
+}
+
+.button3:hover {
+  background-color: red;
+  color: white;
+}
+
+/* body para garantir fundo transparente e texto legível */
+body {
+  background: transparent;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
