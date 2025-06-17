@@ -11,3 +11,14 @@ document.getElementById("formulario").addEventListener("submit", function(e) {
     alert("Usuário e senha salvos com sucesso!");
 });
 
+const usuarioSalvo = localStorage.getItem("usuario");
+if (usuarioSalvo) {
+    alert("Bem-vindo de volta, " + usuarioSalvo + "!");
+}
+
+function limparDados() {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("senha");
+    alert("Dados removidos!");
+}
+
