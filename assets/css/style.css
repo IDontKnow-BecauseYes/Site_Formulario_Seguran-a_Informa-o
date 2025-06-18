@@ -1,15 +1,13 @@
-/* Fundo Matrix */
+/* ========== MATRIX BACKGROUND ========== */
 .matrix-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background: black;
-  display: flex;
-  z-index: 0;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
 }
 
 .matrix-pattern {
@@ -19,109 +17,127 @@
 }
 
 .matrix-column {
+  flex: 1;
   position: relative;
-  width: 20px;
-  animation: fall linear infinite;
-  font-size: 16px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.matrix-column::before {
+  content: "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  position: absolute;
+  top: -100%;
+  left: 0;
   white-space: nowrap;
   writing-mode: vertical-lr;
-  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #ffffff 5%,
+    #00ff41 10%,
+    #00ff41 20%,
+    #00dd33 30%,
+    #00bb22 40%,
+    #009911 50%,
+    #007700 60%,
+    #005500 70%,
+    #003300 80%,
+    rgba(0, 255, 65, 0.5) 90%,
+    transparent 100%
+  );
   background-clip: text;
   -webkit-background-clip: text;
-  background-image: linear-gradient(to bottom, #ffffff, #00ff41, transparent);
-  color: #00ff41;
+  -webkit-text-fill-color: transparent;
+  animation: fall linear infinite;
 }
 
 @keyframes fall {
   0% {
-    transform: translateY(-100%);
+    transform: translateY(0);
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(200%);
     opacity: 0;
   }
 }
 
-/* Container central */
+/* ========== CENTRALIZAÇÃO ========== */
 .container {
   position: relative;
   z-index: 1;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
 }
 
-/* Formulário */
+/* ========== FORMULÁRIO ========== */
 .form {
+  background-color: rgba(23, 23, 23, 0.9);
+  padding: 2rem;
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 2em;
-  background-color: #171717e6;
-  border-radius: 25px;
-  transition: .4s ease-in-out;
+  gap: 1rem;
   width: 100%;
   max-width: 400px;
 }
 
-.form:hover {
-  transform: scale(1.02);
-  border: 1px solid black;
-}
-
 #heading {
   text-align: center;
-  margin-bottom: 1em;
-  color: white;
-  font-size: 1.5em;
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .field {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  border-radius: 25px;
-  padding: 0.6em;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
   background-color: #252525;
+  border-radius: 25px;
   box-shadow: inset 2px 5px 10px #000;
 }
 
 .input-icon {
-  width: 1.3em;
-  height: 1.3em;
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
   fill: white;
 }
 
 .input-field {
+  flex: 1;
   background: none;
   border: none;
   outline: none;
-  width: 100%;
   color: #d3d3d3;
+  font-size: 1rem;
 }
 
-/* Botões */
 .btn {
   display: flex;
-  justify-content: center;
-  gap: 0.5em;
-  margin-top: 1.5em;
+  gap: 0.5rem;
 }
 
 .button1,
 .button2,
 .button3 {
-  padding: 0.5em 1.5em;
-  border-radius: 5px;
-  border: none;
+  flex: 1;
+  padding: 0.6rem;
   background-color: #252525;
   color: white;
-  transition: .3s;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
 .button1:hover,
@@ -130,32 +146,28 @@
 }
 
 .button3 {
-  margin-top: 1em;
-  text-align: center;
-  width: 100%;
+  margin-top: 1rem;
 }
 
 .button3:hover {
   background-color: red;
 }
 
-/* Responsivo */
+/* ========== RESPONSIVIDADE ========== */
 @media (max-width: 768px) {
-  .form {
-    max-width: 90%;
-    padding: 1.5em;
-  }
+  .form { padding: 1.5rem; }
+  #heading { font-size: 1.3rem; }
+  .input-field { font-size: 0.9rem; }
+  .button1, .button2, .button3 { font-size: 0.9rem; padding: 0.5rem; }
 }
 
 @media (max-width: 480px) {
-  .form {
-    padding: 1em;
-  }
-
-  #heading {
-    font-size: 1.2em;
-  }
+  .form { padding: 1rem; }
+  #heading { font-size: 1.2rem; }
+  .input-icon { width: 1.2rem; height: 1.2rem; }
+  .input-field { font-size: 0.85rem; }
 }
+
 
 
 
