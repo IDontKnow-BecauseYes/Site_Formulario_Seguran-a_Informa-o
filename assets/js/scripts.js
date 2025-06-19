@@ -89,10 +89,12 @@ function randomizeCredentials() {
 
 // Quando o DOM estiver pronto
 window.addEventListener('DOMContentLoaded', () => {
+  // Inicializa canvas e partículas
   initCanvas();
   initParticles();
   animate();
 
+  // Ajusta ao redimensionar
   window.addEventListener('resize', () => {
     initCanvas();
     initParticles();
@@ -114,4 +116,33 @@ window.addEventListener('DOMContentLoaded', () => {
   // enviar formulário
   const btnSend = document.getElementById('sendHelp');
   if (btnSend) btnSend.addEventListener('click', enviarFormulario);
+
+  // ─── Cadastro / login via localStorage ───
+  const form = document.getElementById('registerForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();  // previne reload
+
+      const email = form.email.value.trim();
+      const pwd   = form.password.value;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+      if (users[email]) {
+        // já existe -> login
+        if (users[email] === pwd) {
+          alert('Bem-vindo de volta, ' + email + '!');
+        } else {
+          alert('Senha incorreta para ' + email + '.');
+        }
+      } else {
+        // não existe -> cadastro
+        users[email] = pwd;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Conta criada com sucesso para ' + email + '!');
+      }
+
+      // limpa a senha
+      form.password.value = '';
+    });
+  }
 });
