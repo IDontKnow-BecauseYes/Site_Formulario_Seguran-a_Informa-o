@@ -23,11 +23,11 @@ html, body {
 }
 
 .content {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
-  color: #fff;
-  text-align: center;
-  padding-top: 40vh;
 }
 
 .form-container {
