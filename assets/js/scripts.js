@@ -60,28 +60,25 @@ document.getElementById('openHelp').addEventListener('click', () => {
 function enviarFormulario() {
   document.getElementById('modalHelp').style.display = 'none';
   alert('Enviado! Por favor aguarde, enviaremos uma solução em um intervalo de 20 a 42 horas.');
-}
 
 document.getElementById('randomize').addEventListener('click', () => {
   const emailInput = document.querySelector('.form input[type="email"]');
   const passInput = document.querySelector('.form input[type="password"]');
 
-  // Gera sequência de 8 letras aleatórias
   const letters = 'abcdefghijklmnopqrstuvwxyz';
   let local = '';
   for (let i = 0; i < 8; i++) {
     local += letters.charAt(Math.floor(Math.random() * letters.length));
   }
-  // Gera sequência de 4 números
+  
   for (let i = 0; i < 4; i++) {
     local += Math.floor(Math.random() * 10);
   }
-  // Escolhe domínio aleatório
+
   const domains = ['gmail.com', 'outlook.com', 'hotmail.com'];
   const domain = domains[Math.floor(Math.random() * domains.length)];
   emailInput.value = `${local}@${domain}`;
 
-  // Gera senha de 8 caracteres alfanuméricos
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let pwd = '';
   for (let i = 0; i < 8; i++) {
