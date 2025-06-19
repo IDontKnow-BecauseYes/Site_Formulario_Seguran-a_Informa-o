@@ -60,6 +60,7 @@ document.getElementById('openHelp').addEventListener('click', () => {
 function enviarFormulario() {
   document.getElementById('modalHelp').style.display = 'none';
   alert('Enviado! Por favor aguarde, enviaremos uma solução em um intervalo de 20 a 42 horas.');
+}
 
 document.getElementById('randomize').addEventListener('click', () => {
   const emailInput = document.querySelector('.form input[type="email"]');
@@ -70,7 +71,7 @@ document.getElementById('randomize').addEventListener('click', () => {
   for (let i = 0; i < 8; i++) {
     local += letters.charAt(Math.floor(Math.random() * letters.length));
   }
-  
+
   for (let i = 0; i < 4; i++) {
     local += Math.floor(Math.random() * 10);
   }
