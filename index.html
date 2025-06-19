@@ -17,7 +17,7 @@
         <input type="email" class="input" placeholder="Email">
         <input type="password" class="input" placeholder="Password">
         <p class="page-link">
-          <span class="page-link-label">Sem ideias? Clique aqui e randomize sua conta</span>
+          <span class="page-link-label" id="openHelp">Sem ideias? Clique aqui e randomize sua conta</span>
         </p>
         <button class="form-btn">Criar conta</button>
       </form>
@@ -46,6 +46,17 @@
           <span>Registre-se com google</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="modalHelp" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Informe seus dados</h3>
+      <input type="text" class="input" placeholder="Nome">
+      <input type="email" class="input" placeholder="Email">
+      <input type="text" class="input" placeholder="Contato">
+      <textarea class="input" rows="4" placeholder="Descreva o problema"></textarea>
+      <button class="form-btn" onclick="enviarFormulario()">Enviar</button>
     </div>
   </div>
 
