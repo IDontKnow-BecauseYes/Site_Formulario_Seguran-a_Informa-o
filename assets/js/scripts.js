@@ -62,7 +62,6 @@ function enviarFormulario() {
   alert('Enviado! Por favor aguarde, enviaremos uma solução em um intervalo de 20 a 42 horas.');
 }
 
-// Randomiza email e senha no formulário principal
 document.getElementById('randomize').addEventListener('click', () => {
   const emailInput = document.querySelector('.form input[type="email"]');
   const passInput = document.querySelector('.form input[type="password"]');
