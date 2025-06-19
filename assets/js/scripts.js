@@ -35,7 +35,7 @@ class Particle {
 
 // Cria as partículas
 function initParticles() {
-  particlesArray     = [];
+  particlesArray = [];
   const numParticles = (canvas.width * canvas.height) / 8000;
   for (let i = 0; i < numParticles; i++) {
     particlesArray.push(new Particle());
@@ -87,24 +87,22 @@ function randomizeCredentials() {
   passInput.value = pwd;
 }
 
-// Aguarda DOM, depois anexa tudo e inicia animação
+// Quando o DOM estiver pronto
 window.addEventListener('DOMContentLoaded', () => {
-  // 1) Canvas
   initCanvas();
   initParticles();
   animate();
 
-  // 2) Redimensionamento
   window.addEventListener('resize', () => {
     initCanvas();
     initParticles();
   });
 
-  // 3) Botão “Sem ideias? … randomize sua conta”
+  // randomize
   const btnRandom = document.getElementById('randomize');
   if (btnRandom) btnRandom.addEventListener('click', randomizeCredentials);
 
-  // 4) Abrir modal de ajuda
+  // abrir modal
   const btnHelpOpen = document.getElementById('openHelp');
   if (btnHelpOpen) {
     btnHelpOpen.addEventListener('click', () => {
@@ -113,7 +111,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5) Enviar formulário
-  const btnSend = document.getElementById('sendHelp'); // ajuste se o seu botão tiver outro ID
+  // enviar formulário
+  const btnSend = document.getElementById('sendHelp');
   if (btnSend) btnSend.addEventListener('click', enviarFormulario);
 });
