@@ -1,25 +1,22 @@
 const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const ctx    = canvas.getContext('2d');
 let particlesArray;
 const colors = ['#ffffff', '#ffffffaa', '#ffffff80'];
 
+// Ajusta o tamanho do canvas
 function initCanvas() {
-  canvas.width = window.innerWidth;
+  canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 
-window.addEventListener('resize', () => {
-  initCanvas();
-  initParticles();
-});
-
+// Classe da partícula
 class Particle {
   constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 1;
+    this.x      = Math.random() * canvas.width;
+    this.y      = Math.random() * canvas.height;
+    this.size   = Math.random() * 2 + 1;
     this.speedY = Math.random() * 1 + 0.2;
-    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.color  = colors[Math.floor(Math.random() * colors.length)];
   }
   update() {
     this.y -= this.speedY;
@@ -36,14 +33,16 @@ class Particle {
   }
 }
 
+// Cria as partículas
 function initParticles() {
-  particlesArray = [];
-  const numberOfParticles = (canvas.width * canvas.height) / 8000;
-  for (let i = 0; i < numberOfParticles; i++) {
+  particlesArray     = [];
+  const numParticles = (canvas.width * canvas.height) / 8000;
+  for (let i = 0; i < numParticles; i++) {
     particlesArray.push(new Particle());
   }
 }
 
+// Loop de desenho
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particlesArray.forEach(p => {
@@ -53,41 +52,68 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-document.getElementById('openHelp').addEventListener('click', () => {
-  document.getElementById('modalHelp').style.display = 'flex';
-});
-
+// Fecha o modal e dispara alerta
 function enviarFormulario() {
-  document.getElementById('modalHelp').style.display = 'none';
+  const modal = document.getElementById('modalHelp');
+  if (modal) modal.style.display = 'none';
   alert('Enviado! Por favor aguarde, enviaremos uma solução em um intervalo de 20 a 42 horas.');
 }
 
-document.getElementById('randomize').addEventListener('click', () => {
+// Gera e preenche email + senha
+function randomizeCredentials() {
   const emailInput = document.querySelector('.form input[type="email"]');
-  const passInput = document.querySelector('.form input[type="password"]');
+  const passInput  = document.querySelector('.form input[type="password"]');
+  if (!emailInput || !passInput) return;
 
+  // Monta usuário
   const letters = 'abcdefghijklmnopqrstuvwxyz';
   let local = '';
   for (let i = 0; i < 8; i++) {
     local += letters.charAt(Math.floor(Math.random() * letters.length));
   }
-
   for (let i = 0; i < 4; i++) {
     local += Math.floor(Math.random() * 10);
   }
-
   const domains = ['gmail.com', 'outlook.com', 'hotmail.com'];
-  const domain = domains[Math.floor(Math.random() * domains.length)];
+  const domain  = domains[Math.floor(Math.random() * domains.length)];
   emailInput.value = `${local}@${domain}`;
 
+  // Monta senha
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let pwd = '';
   for (let i = 0; i < 8; i++) {
     pwd += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   passInput.value = pwd;
-});
+}
 
-initCanvas();
-initParticles();
-animate();
+// Aguarda DOM, depois anexa tudo e inicia animação
+window.addEventListener('DOMContentLoaded', () => {
+  // 1) Canvas
+  initCanvas();
+  initParticles();
+  animate();
+
+  // 2) Redimensionamento
+  window.addEventListener('resize', () => {
+    initCanvas();
+    initParticles();
+  });
+
+  // 3) Botão “Sem ideias? … randomize sua conta”
+  const btnRandom = document.getElementById('randomize');
+  if (btnRandom) btnRandom.addEventListener('click', randomizeCredentials);
+
+  // 4) Abrir modal de ajuda
+  const btnHelpOpen = document.getElementById('openHelp');
+  if (btnHelpOpen) {
+    btnHelpOpen.addEventListener('click', () => {
+      const modal = document.getElementById('modalHelp');
+      if (modal) modal.style.display = 'flex';
+    });
+  }
+
+  // 5) Enviar formulário
+  const btnSend = document.getElementById('sendHelp'); // ajuste se o seu botão tiver outro ID
+  if (btnSend) btnSend.addEventListener('click', enviarFormulario);
+});
