@@ -28,18 +28,22 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .form-container {
   width: 350px;
-  height: 500px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 20px 30px;
-  margin: 0 auto;
 }
+
 
 .title {
   text-align: center;
