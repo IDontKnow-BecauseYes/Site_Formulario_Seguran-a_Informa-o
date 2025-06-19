@@ -12,14 +12,16 @@
   <div class="content">
     <div class="form-container">
       <p class="title">Registre-se aqui</p>
-      <form class="form">
-        <input type="email" class="input" placeholder="Email">
-        <input type="password" class="input" placeholder="Password">
+      <form id="registerForm" class="form" autocomplete="on" action="#" method="POST">
+        <input type="email" name="email" class="input" placeholder="Email" required>
+        <input type="password" name="password" class="input" placeholder="Password" required>
         <p id="randomize" class="page-link">
           <span class="page-link-label">Sem ideias? Clique aqui e randomize sua conta</span>
         </p>
-        <button class="form-btn">Criar conta</button>
+        <!-- agora é um botão de submit -->
+        <button type="submit" class="form-btn">Criar conta</button>
       </form>
+
       <p class="sign-up-label">
         algum problema?
         <span class="sign-up-link" id="openHelp">contate-nos</span>
