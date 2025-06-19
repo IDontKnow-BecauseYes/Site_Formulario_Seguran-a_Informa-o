@@ -87,7 +87,6 @@ document.getElementById('randomize').addEventListener('click', () => {
   passInput.value = pwd;
 });
 
-
 initCanvas();
 initParticles();
 animate();
