@@ -53,7 +53,15 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
+document.getElementById('openHelp').addEventListener('click', () => {
+  document.getElementById('modalHelp').style.display = 'flex';
+});
+
+function enviarFormulario() {
+  document.getElementById('modalHelp').style.display = 'none';
+  alert('Enviado! Por favor aguarde, enviaremos uma solução em um intervalo de 20 a 42 horas.');
+}
+
 initCanvas();
 initParticles();
 animate();
-
