@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área do Usuário</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+    }
+    .sidebar {
+      width: 80px;
+      height: 100vh;
+      background: #222;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+    }
+    .ball {
+      width: 40px;
+      height: 40px;
+      background: #4caf50;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .info-box {
+      position: fixed;
+      top: 100px;
+      left: 100px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 300px;
+    }
+    .info-row {
+      margin-bottom: 10px;
+    }
+    .password-container {
+      display: flex;
+      align-items: center;
+    }
+    .password-container span {
+      margin-left: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-voltar {
+      background: #87cefa;
+      color: #000;
+    }
+    .btn-sair {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="ball" id="toggleInfo"></div>
+  </div>
 
+  <div class="info-box" id="infoBox">
+    <div class="info-row"><strong>Email:</strong> <span id="userEmail">carregando...</span></div>
+    <div class="info-row password-container">
+      <strong>Senha:</strong> <span id="userPassword">********</span>
+      <span id="togglePassword">👁️‍🗨️</span>
+    </div>
+    <div class="buttons">
+      <button class="btn btn-voltar" id="btnVoltar">Voltar</button>
+      <button class="btn btn-sair" id="btnSair">Sair</button>
+    </div>
+  </div>
+
+  <script>
+    const toggleInfoBtn = document.getElementById("toggleInfo");
+    const infoBox = document.getElementById("infoBox");
+    const userEmailSpan = document.getElementById("userEmail");
+    const userPasswordSpan = document.getElementById("userPassword");
+    const togglePasswordBtn = document.getElementById("togglePassword");
+
+    let passwordVisible = false;
+
+    const lastUser = JSON.parse(localStorage.getItem('lastUser'));
+    if (lastUser) {
+      userEmailSpan.textContent = lastUser.email;
+      userPasswordSpan.dataset.realPassword = lastUser.password;
+    }
+
+    toggleInfoBtn.addEventListener("click", () => {
+      infoBox.style.display = infoBox.style.display === "none" ? "block" : "none";
+    });
+
+    togglePasswordBtn.addEventListener("click", () => {
+      if (!lastUser) return;
+      passwordVisible = !passwordVisible;
+      userPasswordSpan.textContent = passwordVisible ? lastUser.password : '********';
+      togglePasswordBtn.textContent = passwordVisible ? '👁️' : '👁️‍🗨️';
+    });
+
+    document.getElementById("btnVoltar").addEventListener("click", () => {
+      infoBox.style.display = "none";
+    });
+
+    document.getElementById("btnSair").addEventListener("click", () => {
+      localStorage.removeItem("lastUser");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
