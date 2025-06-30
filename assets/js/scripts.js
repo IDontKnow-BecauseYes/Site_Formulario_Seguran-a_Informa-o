@@ -131,6 +131,8 @@ window.addEventListener('DOMContentLoaded', () => {
         // já existe -> login
         if (users[email] === pwd) {
           alert('Bem-vindo de volta, ' + email + '!');
+          localStorage.setItem('lastUser', JSON.stringify({ email, password: pwd }));
+          window.location.href = 'world.html';
         } else {
           alert('Senha incorreta para ' + email + '.');
         }
@@ -139,6 +141,8 @@ window.addEventListener('DOMContentLoaded', () => {
         users[email] = pwd;
         localStorage.setItem('users', JSON.stringify(users));
         alert('Conta criada com sucesso para ' + email + '!');
+        localStorage.setItem('lastUser', JSON.stringify({ email, password: pwd }));
+        window.location.href = 'world.html';
       }
 
       // limpa a senha
