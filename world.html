@@ -5,15 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Área do Usuário</title>
   <style>
+    :root {
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --sidebar-bg: #222;
+      --page-bg: #fff;
+      --btn-bg: #333;
+      --btn-hover: #555;
+      --toggle-bg: #4caf50;
+      --toggle-hover: #45a049;
+    }
+    [data-theme="dark"] {
+      --bg-color: #1e1e1e;
+      --text-color: #ddd;
+      --sidebar-bg: #111;
+      --page-bg: #2a2a2a;
+      --btn-bg: #555;
+      --btn-hover: #777;
+      --toggle-bg: #2196F3;
+      --toggle-hover: #1976D2;
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f0f0f0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
     }
     .sidebar {
       width: 80px;
       height: 100vh;
-      background: #222;
+      background: var(--sidebar-bg);
       position: fixed;
       top: 0;
       left: 0;
@@ -21,6 +43,7 @@
       flex-direction: column;
       align-items: center;
       padding-top: 20px;
+      transition: background 0.3s;
     }
     .ball {
       width: 40px;
@@ -34,13 +57,14 @@
       position: fixed;
       top: 100px;
       left: 100px;
-      background: white;
+      background: var(--page-bg);
       border: 1px solid #ccc;
       padding: 20px;
       border-radius: 10px;
       display: none;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       max-width: 300px;
+      transition: background 0.3s;
     }
     .info-row { margin-bottom: 10px; }
     .password-container { display: flex; align-items: center; }
@@ -49,6 +73,27 @@
     .btn { padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     .btn-voltar { background: #87cefa; color: #000; }
     .btn-sair { background: #f44336; color: white; }
+
+    /* Theme Toggle Button */
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background: var(--toggle-bg);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
+      font-size: 20px;
+    }
+    #themeToggle:hover { background: var(--toggle-hover); transform: scale(1.1); }
 
     /* Slideshow Styles */
     .slideshow-container {
@@ -69,8 +114,7 @@
       height: 250px;
       object-fit: cover;
       border-radius: 10px;
-      /* Animation */
-      animation-fill-mode: both;
+      animation: slideFade 0.5s ease;
     }
     .side-img {
       width: 200px;
@@ -82,40 +126,40 @@
     }
     .slideshow-controls {
       margin-top: 10px;
+      display: flex;
+      gap: 10px;
     }
     .slideshow-controls button {
       width: 50px;
       height: 50px;
-      padding: 0;
-      margin: 0 10px;
       font-size: 20px;
       cursor: pointer;
       border: none;
       border-radius: 50%;
-      background: #333;
+      background: var(--btn-bg);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
     }
-    .slideshow-controls button:hover {
-      background: #555;
-    }
+    .slideshow-controls button:hover { background: var(--btn-hover); transform: scale(1.1); }
     .slideshow-description {
       margin-top: 10px;
       font-size: 14px;
-      color: #333;
+      color: var(--text-color);
       max-width: 400px;
       text-align: center;
     }
     @keyframes slideFade {
-      0% { opacity: 0; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
+  <button id="themeToggle">🌙</button>
   <div class="sidebar">
     <div class="ball" id="toggleInfo"></div>
   </div>
@@ -132,7 +176,6 @@
     </div>
   </div>
 
-  <!-- Slideshow Section -->
   <div class="slideshow-container">
     <div class="slideshow-images">
       <img id="img-left" class="side-img" src="" alt="Anterior">
@@ -143,11 +186,20 @@
       <button id="prev-slide">⬅️</button>
       <button id="next-slide">➡️</button>
     </div>
-    <audio id="slide-audio" controls autoplay style="margin-top: 10px;"></audio>
+    <audio id="slide-audio" controls style="margin-top: 10px;"></audio>
     <div id="slide-description" class="slideshow-description">Descrição da imagem</div>
   </div>
 
   <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', next);
+      themeToggle.textContent = next === 'light' ? '🌙' : '☀️';
+    });
+
     // Info box logic
     const toggleInfoBtn = document.getElementById("toggleInfo");
     const infoBox = document.getElementById("infoBox");
@@ -161,4 +213,55 @@
       userPasswordSpan.dataset.realPassword = lastUser.password;
     }
     toggleInfoBtn.addEventListener("click", () => {
-      infoBox.style.display = infoBox.style.
+      infoBox.style.display = infoBox.style.display === "none" ? "block" : "none";
+    });
+    togglePasswordBtn.addEventListener("click", () => {
+      if (!lastUser) return;
+      passwordVisible = !passwordVisible;
+      userPasswordSpan.textContent = passwordVisible ? lastUser.password : '********';
+      togglePasswordBtn.textContent = passwordVisible ? '👁️' : '👁️‍🗨️';
+    });
+    document.getElementById("btnVoltar").addEventListener("click", () => {
+      infoBox.style.display = "none";
+    });
+    document.getElementById("btnSair").addEventListener("click", () => {
+      localStorage.removeItem("lastUser");
+      window.location.href = "index.html";
+    });
+
+    // Slideshow logic
+    const slideshowImages = ['img1.jpg','img2.jpg','img3.jpg','img4.jpg','img5.jpg','img6.jpg','img7.jpg'];
+    const slideshowAudios = ['audio1.mp3','audio2.mp3','audio3.mp3','audio4.mp3','audio5.mp3','audio6.mp3','audio7.mp3'];
+    const descriptions = ['Descrição 1','Descrição 2','Descrição 3','Descrição 4','Descrição 5','Descrição 6','Descrição 7'];
+    let slideIndex = 0;
+    const leftImg = document.getElementById('img-left');
+    const centerImg = document.getElementById('img-center');
+    const rightImg = document.getElementById('img-right');
+    const audioPlayer = document.getElementById('slide-audio');
+    const descEl = document.getElementById('slide-description');
+
+    function updateSlideshow() {
+      const prev = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
+      const next = (slideIndex + 1) % slideshowImages.length;
+      leftImg.src = 'assets/img/' + slideshowImages[prev];
+      centerImg.src = 'assets/img/' + slideshowImages[slideIndex];
+      rightImg.src = 'assets/img/' + slideshowImages[next];
+      descEl.textContent = descriptions[slideIndex];
+      // play audio after setting src
+      audioPlayer.src = 'assets/audio/' + slideshowAudios[slideIndex];
+      audioPlayer.load();
+      audioPlayer.play();
+    }
+    document.getElementById('prev-slide').addEventListener('click', () => {
+      slideIndex = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
+      updateSlideshow();
+    });
+    document.getElementById('next-slide').addEventListener('click', () => {
+      slideIndex = (slideIndex + 1) % slideshowImages.length;
+      updateSlideshow();
+    });
+    // inicia slideshow
+    updateSlideshow();
+  </script>
+</body>
+</html>
