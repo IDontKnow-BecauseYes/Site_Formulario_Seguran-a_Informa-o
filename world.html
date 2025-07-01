@@ -95,66 +95,16 @@
     }
     #themeToggle:hover { background: var(--toggle-hover); transform: scale(1.1); }
 
-    /* Slideshow Styles */
-    .slideshow-container {
+    .message-container {
       margin-left: 80px;
-      margin-top: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .slideshow-images {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-    }
-    .main-img {
-      width: 400px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-      animation: slideFade 0.5s ease;
-    }
-    .side-img {
-      width: 200px;
-      height: 125px;
-      opacity: 0.5;
-      object-fit: cover;
-      border-radius: 10px;
-      transition: opacity 0.3s ease;
-    }
-    .slideshow-controls {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-    }
-    .slideshow-controls button {
-      width: 50px;
-      height: 50px;
-      font-size: 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 50%;
-      background: var(--btn-bg);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transition: background 0.3s, transform 0.2s;
-    }
-    .slideshow-controls button:hover { background: var(--btn-hover); transform: scale(1.1); }
-    .slideshow-description {
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--text-color);
-      max-width: 400px;
+      margin-top: 100px;
+      padding: 40px;
       text-align: center;
-    }
-    @keyframes slideFade {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin-right: auto;
+      margin-left: auto;
+      color: var(--text-color);
     }
   </style>
 </head>
@@ -176,18 +126,8 @@
     </div>
   </div>
 
-  <div class="slideshow-container">
-    <div class="slideshow-images">
-      <img id="img-left" class="side-img" src="" alt="Anterior">
-      <img id="img-center" class="main-img" src="" alt="Atual">
-      <img id="img-right" class="side-img" src="" alt="Próxima">
-    </div>
-    <div class="slideshow-controls">
-      <button id="prev-slide">⬅️</button>
-      <button id="next-slide">➡️</button>
-    </div>
-    <audio id="slide-audio" controls style="margin-top: 10px;"></audio>
-    <div id="slide-description" class="slideshow-description">Descrição da imagem</div>
+  <div class="message-container">
+    <p>Sem verba para o resto do site, esperamos que você aproveite o que tenha, tenha um bom dia.</p>
   </div>
 
   <script>
@@ -228,40 +168,6 @@
       localStorage.removeItem("lastUser");
       window.location.href = "index.html";
     });
-
-    // Slideshow logic
-    const slideshowImages = ['img1.jpg','img2.jpg','img3.jpg','img4.jpg','img5.jpg','img6.jpg','img7.jpg'];
-    const slideshowAudios = ['audio1.mp3','audio2.mp3','audio3.mp3','audio4.mp3','audio5.mp3','audio6.mp3','audio7.mp3'];
-    const descriptions = ['Descrição 1','Descrição 2','Descrição 3','Descrição 4','Descrição 5','Descrição 6','Descrição 7'];
-    let slideIndex = 0;
-    const leftImg = document.getElementById('img-left');
-    const centerImg = document.getElementById('img-center');
-    const rightImg = document.getElementById('img-right');
-    const audioPlayer = document.getElementById('slide-audio');
-    const descEl = document.getElementById('slide-description');
-
-    function updateSlideshow() {
-      const prev = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
-      const next = (slideIndex + 1) % slideshowImages.length;
-      leftImg.src = 'assets/img/' + slideshowImages[prev];
-      centerImg.src = 'assets/img/' + slideshowImages[slideIndex];
-      rightImg.src = 'assets/img/' + slideshowImages[next];
-      descEl.textContent = descriptions[slideIndex];
-      // play audio after setting src
-      audioPlayer.src = 'assets/audio/' + slideshowAudios[slideIndex];
-      audioPlayer.load();
-      audioPlayer.play();
-    }
-    document.getElementById('prev-slide').addEventListener('click', () => {
-      slideIndex = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
-      updateSlideshow();
-    });
-    document.getElementById('next-slide').addEventListener('click', () => {
-      slideIndex = (slideIndex + 1) % slideshowImages.length;
-      updateSlideshow();
-    });
-    // inicia slideshow
-    updateSlideshow();
   </script>
 </body>
 </html>
