@@ -74,6 +74,55 @@
       background: #f44336;
       color: white;
     }
+
+    /* Slideshow Styles */
+    .slideshow-container {
+      margin-left: 80px;
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .slideshow-images {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .main-img {
+      width: 400px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .side-img {
+      width: 200px;
+      height: 125px;
+      opacity: 0.5;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: opacity 0.3s ease;
+    }
+    .slideshow-controls {
+      margin-top: 10px;
+    }
+    .slideshow-controls button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background: #333;
+      color: white;
+    }
+    .slideshow-description {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+      max-width: 400px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -93,40 +142,90 @@
     </div>
   </div>
 
+  <!-- Slideshow Section -->
+  <div class="slideshow-container">
+    <div class="slideshow-images">
+      <img id="img-left" class="side-img" src="" alt="Anterior">
+      <img id="img-center" class="main-img" src="" alt="Atual">
+      <img id="img-right" class="side-img" src="" alt="Próxima">
+    </div>
+    <div class="slideshow-controls">
+      <button id="prev-slide">⬅️ Anterior</button>
+      <button id="next-slide">Próxima ➡️</button>
+    </div>
+    <audio id="slide-audio" controls autoplay style="margin-top: 10px;"></audio>
+    <div id="slide-description" class="slideshow-description">Descrição da imagem</div>
+  </div>
+
   <script>
+    // Info box logic
     const toggleInfoBtn = document.getElementById("toggleInfo");
     const infoBox = document.getElementById("infoBox");
     const userEmailSpan = document.getElementById("userEmail");
     const userPasswordSpan = document.getElementById("userPassword");
     const togglePasswordBtn = document.getElementById("togglePassword");
-
     let passwordVisible = false;
-
     const lastUser = JSON.parse(localStorage.getItem('lastUser'));
     if (lastUser) {
       userEmailSpan.textContent = lastUser.email;
       userPasswordSpan.dataset.realPassword = lastUser.password;
     }
-
     toggleInfoBtn.addEventListener("click", () => {
       infoBox.style.display = infoBox.style.display === "none" ? "block" : "none";
     });
-
     togglePasswordBtn.addEventListener("click", () => {
       if (!lastUser) return;
       passwordVisible = !passwordVisible;
       userPasswordSpan.textContent = passwordVisible ? lastUser.password : '********';
       togglePasswordBtn.textContent = passwordVisible ? '👁️' : '👁️‍🗨️';
     });
-
     document.getElementById("btnVoltar").addEventListener("click", () => {
       infoBox.style.display = "none";
     });
-
     document.getElementById("btnSair").addEventListener("click", () => {
       localStorage.removeItem("lastUser");
       window.location.href = "index.html";
     });
+
+    // Slideshow logic
+    const slideshowImages = [
+      'img1.jpg','img2.jpg','img3.jpg','img4.jpg','img5.jpg','img6.jpg','img7.jpg'
+    ];
+    const slideshowAudios = [
+      'audio1.mp3','audio2.mp3','audio3.mp3','audio4.mp3','audio5.mp3','audio6.mp3','audio7.mp3'
+    ];
+    const descriptions = [
+      'Descrição 1','Descrição 2','Descrição 3','Descrição 4','Descrição 5','Descrição 6','Descrição 7'
+    ];
+    let slideIndex = 0;
+    const leftImg = document.getElementById('img-left');
+    const centerImg = document.getElementById('img-center');
+    const rightImg = document.getElementById('img-right');
+    const audioPlayer = document.getElementById('slide-audio');
+    const descEl = document.getElementById('slide-description');
+
+    function updateSlideshow() {
+      const prev = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
+      const next = (slideIndex + 1) % slideshowImages.length;
+      leftImg.src = 'assets/img/' + slideshowImages[prev];
+      centerImg.src = 'assets/img/' + slideshowImages[slideIndex];
+      rightImg.src = 'assets/img/' + slideshowImages[next];
+      audioPlayer.src = 'assets/audio/' + slideshowAudios[slideIndex];
+      audioPlayer.play();
+      descEl.textContent = descriptions[slideIndex];
+    }
+
+    document.getElementById('prev-slide').addEventListener('click', () => {
+      slideIndex = (slideIndex - 1 + slideshowImages.length) % slideshowImages.length;
+      updateSlideshow();
+    });
+    document.getElementById('next-slide').addEventListener('click', () => {
+      slideIndex = (slideIndex + 1) % slideshowImages.length;
+      updateSlideshow();
+    });
+
+    // Inicia slideshow
+    updateSlideshow();
   </script>
 </body>
 </html>
